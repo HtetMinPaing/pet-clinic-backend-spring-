@@ -3,14 +3,15 @@ package com.example.petclinicDB.controller;
 import com.example.petclinicDB.domain.dto.PatientDto;
 import com.example.petclinicDB.domain.entity.PatientEntity;
 import com.example.petclinicDB.mapper.Mapper;
-import com.example.petclinicDB.mapper.impl.PatientMapper;
 import com.example.petclinicDB.service.PatientService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/patient")
@@ -23,6 +24,19 @@ public class PatientController {
     public PatientController(PatientService patientService, Mapper<PatientEntity, PatientDto> patientMapper) {
         this.patientService = patientService;
         this.patientMapper = patientMapper;
+    }
+
+    @GetMapping(path = "/all")
+    public List<PatientDto> findAllPatients() {
+        return patientService.findAll().stream()
+                .map(patientMapper::mapFrom)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(path = "/all/pages")
+    public Page<PatientDto> findAllPatients(Pageable pageable) {
+        Page<PatientEntity> pages = patientService.findAll(pageable);
+        return pages.map(patientMapper::mapFrom);
     }
 
     @PostMapping(path = "/add")
