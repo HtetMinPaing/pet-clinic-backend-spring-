@@ -13,5 +13,8 @@ public interface PatientService {
 
     Page<PatientEntity> findAll(Pageable pageable);
 
+    PatientEntity findPatient(Integer id);
+
     PatientEntity updatePatient(Integer id, PatientEntity patient);
+
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,6 +42,12 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public PatientEntity findPatient(Integer id) {
+        return patientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
+    }
+
+    @Override
     public PatientEntity updatePatient(Integer id, PatientEntity patient) {
         Optional<PatientEntity> foundPatient = patientRepository.findById(id);
         return foundPatient.map(existingPatient -> {
@@ -48,11 +55,15 @@ public class PatientServiceImpl implements PatientService {
             Optional.ofNullable(patient.getStatus()).ifPresent(existingPatient::setStatus);
             Optional.ofNullable(patient.getPawrent()).ifPresent(existingPatient::setPawrent);
             Optional.ofNullable(patient.getBreed()).ifPresent(existingPatient::setBreed);
+            Optional.ofNullable(patient.getGender()).ifPresent(existingPatient::setGender);
             Optional.ofNullable(patient.getDateOfBirth()).ifPresent(existingPatient::setDateOfBirth);
             Optional.ofNullable(patient.getContactPhone()).ifPresent(existingPatient::setContactPhone);
             Optional.ofNullable(patient.getAddress()).ifPresent(existingPatient::setAddress);
             Optional.ofNullable(patient.getCity()).ifPresent(existingPatient::setCity);
+            Optional.ofNullable(patient.getTownship()).ifPresent(existingPatient::setTownship);
+            patientRepository.save(existingPatient);
             return existingPatient;
         }).orElseThrow(() -> new RuntimeException("Patient cannot be update"));
     }
+
 }

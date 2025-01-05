@@ -39,6 +39,13 @@ public class PatientController {
         return pages.map(patientMapper::mapFrom);
     }
 
+    @GetMapping(path = "/find/{id}")
+    public ResponseEntity<PatientDto> findPatient(@PathVariable("id") Integer id) {
+        PatientEntity foundPatient = patientService.findPatient(id);
+        PatientDto returnPatient = patientMapper.mapFrom(foundPatient);
+        return new ResponseEntity<>(returnPatient, HttpStatus.FOUND);
+    }
+
     @PostMapping(path = "/add")
     public ResponseEntity<PatientDto> addPatient(@RequestBody PatientDto patientDto) {
         PatientEntity patient = patientMapper.mapTo(patientDto);
@@ -49,7 +56,7 @@ public class PatientController {
 
     @PatchMapping(path = "/update/{id}")
     public ResponseEntity<PatientDto> updatePatient(
-            @PathVariable Integer id,
+            @PathVariable("id") Integer id,
             @RequestBody PatientDto patientDto
     ) {
         PatientEntity patient = patientMapper.mapTo(patientDto);
