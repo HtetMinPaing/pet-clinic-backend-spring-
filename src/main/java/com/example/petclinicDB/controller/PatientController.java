@@ -5,6 +5,7 @@ import com.example.petclinicDB.domain.entity.PatientEntity;
 import com.example.petclinicDB.mapper.Mapper;
 import com.example.petclinicDB.service.PatientService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -38,11 +39,13 @@ public class PatientController {
     public Page<PatientDto> findAllPatients(
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
             Pageable pageable
     ) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
-
-        Page<PatientEntity> pages = patientService.findAll(pageable);
+        PageRequest pageRequest = PageRequest.of(page,size, sort);
+        Page<PatientEntity> pages = patientService.findAll(pageRequest);
         return pages.map(patientMapper::mapFrom);
     }
 
