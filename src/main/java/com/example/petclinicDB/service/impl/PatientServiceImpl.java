@@ -66,4 +66,9 @@ public class PatientServiceImpl implements PatientService {
         }).orElseThrow(() -> new RuntimeException("Patient cannot be update"));
     }
 
+    @Override
+    public void deletePatient(Integer id) {
+        patientRepository.deleteById(id);
+    }
+
 }

@@ -6,6 +6,7 @@ import com.example.petclinicDB.mapper.Mapper;
 import com.example.petclinicDB.service.PatientService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,13 @@ public class PatientController {
     }
 
     @GetMapping(path = "/all/pages")
-    public Page<PatientDto> findAllPatients(Pageable pageable) {
+    public Page<PatientDto> findAllPatients(
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection,
+            Pageable pageable
+    ) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+
         Page<PatientEntity> pages = patientService.findAll(pageable);
         return pages.map(patientMapper::mapFrom);
     }
@@ -63,6 +70,12 @@ public class PatientController {
         PatientEntity savedPatient = patientService.updatePatient(id, patient);
         PatientDto returnPatient = patientMapper.mapFrom(savedPatient);
         return new ResponseEntity<>(returnPatient, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/delete/{id}")
+    public ResponseEntity<String> deletePatient(@PathVariable("id") Integer id) {
+        patientService.deletePatient(id);
+        return new ResponseEntity<>("Patient successfully deleted (Id: "+ id + ")",HttpStatus.OK);
     }
 
 }
