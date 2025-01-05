@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -37,5 +38,21 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Page<PatientEntity> findAll(Pageable pageable) {
         return patientRepository.findAll(pageable);
+    }
+
+    @Override
+    public PatientEntity updatePatient(Integer id, PatientEntity patient) {
+        Optional<PatientEntity> foundPatient = patientRepository.findById(id);
+        return foundPatient.map(existingPatient -> {
+            Optional.ofNullable(patient.getPetName()).ifPresent(existingPatient::setPetName);
+            Optional.ofNullable(patient.getStatus()).ifPresent(existingPatient::setStatus);
+            Optional.ofNullable(patient.getPawrent()).ifPresent(existingPatient::setPawrent);
+            Optional.ofNullable(patient.getBreed()).ifPresent(existingPatient::setBreed);
+            Optional.ofNullable(patient.getDateOfBirth()).ifPresent(existingPatient::setDateOfBirth);
+            Optional.ofNullable(patient.getContactPhone()).ifPresent(existingPatient::setContactPhone);
+            Optional.ofNullable(patient.getAddress()).ifPresent(existingPatient::setAddress);
+            Optional.ofNullable(patient.getCity()).ifPresent(existingPatient::setCity);
+            return existingPatient;
+        }).orElseThrow(() -> new RuntimeException("Patient cannot be update"));
     }
 }

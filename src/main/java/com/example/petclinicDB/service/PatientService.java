@@ -12,4 +12,6 @@ public interface PatientService {
     List<PatientEntity> findAll();
 
     Page<PatientEntity> findAll(Pageable pageable);
+
+    PatientEntity updatePatient(Integer id, PatientEntity patient);
 }

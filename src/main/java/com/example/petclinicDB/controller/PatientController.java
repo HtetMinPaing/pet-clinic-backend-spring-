@@ -47,4 +47,15 @@ public class PatientController {
         return new ResponseEntity<>(returnPatient, HttpStatus.OK);
     }
 
+    @PatchMapping(path = "/update/{id}")
+    public ResponseEntity<PatientDto> updatePatient(
+            @PathVariable Integer id,
+            @RequestBody PatientDto patientDto
+    ) {
+        PatientEntity patient = patientMapper.mapTo(patientDto);
+        PatientEntity savedPatient = patientService.updatePatient(id, patient);
+        PatientDto returnPatient = patientMapper.mapFrom(savedPatient);
+        return new ResponseEntity<>(returnPatient, HttpStatus.OK);
+    }
+
 }
