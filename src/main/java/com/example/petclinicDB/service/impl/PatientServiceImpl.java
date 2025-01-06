@@ -5,6 +5,7 @@ import com.example.petclinicDB.domain.entity.PatientEntity;
 import com.example.petclinicDB.repository.PatientRepository;
 import com.example.petclinicDB.service.PatientService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,11 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Page<PatientEntity> findAll(Pageable pageable) {
         return patientRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<PatientEntity> filterPatients(String search, String status, String breed, PageRequest pageRequest) {
+        return patientRepository.findPatientsWithFilters(search, status, breed, pageRequest);
     }
 
     @Override
