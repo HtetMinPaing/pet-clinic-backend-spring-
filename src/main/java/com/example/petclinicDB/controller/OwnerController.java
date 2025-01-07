@@ -30,4 +30,18 @@ public class OwnerController {
         return new ResponseEntity<>(returnOwner, HttpStatus.CREATED);
     }
 
+    @GetMapping(path = "/find/{id}")
+    public ResponseEntity<OwnerDto> findOwner(@PathVariable("id") Integer id) {
+        OwnerEntity foundOwner = ownerService.findOwnerById(id);
+        OwnerDto returnOwner = ownerMapper.mapToDto(foundOwner);
+        return new ResponseEntity<>(returnOwner, HttpStatus.FOUND);
+    }
+
+    @GetMapping(path = "/find")
+    public ResponseEntity<OwnerDto> findOwnerByEmail(@RequestBody OwnerDto ownerDto) {
+        OwnerEntity foundOwner = ownerService.findOwnerByEmail(ownerDto.getEmail());
+        OwnerDto returnOwner = ownerMapper.mapToDto(foundOwner);
+        return new ResponseEntity<>(returnOwner, HttpStatus.FOUND);
+    }
+
 }
