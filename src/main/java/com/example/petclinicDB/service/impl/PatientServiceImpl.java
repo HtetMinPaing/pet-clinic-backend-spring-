@@ -63,10 +63,10 @@ public class PatientServiceImpl implements PatientService {
             Optional.ofNullable(patient.getBreed()).ifPresent(existingPatient::setBreed);
             Optional.ofNullable(patient.getGender()).ifPresent(existingPatient::setGender);
             Optional.ofNullable(patient.getDateOfBirth()).ifPresent(existingPatient::setDateOfBirth);
-            Optional.ofNullable(patient.getContactPhone()).ifPresent(existingPatient::setContactPhone);
-            Optional.ofNullable(patient.getAddress()).ifPresent(existingPatient::setAddress);
-            Optional.ofNullable(patient.getCity()).ifPresent(existingPatient::setCity);
-            Optional.ofNullable(patient.getTownship()).ifPresent(existingPatient::setTownship);
+//            Optional.ofNullable(patient.getContactPhone()).ifPresent(existingPatient::setContactPhone);
+//            Optional.ofNullable(patient.getAddress()).ifPresent(existingPatient::setAddress);
+//            Optional.ofNullable(patient.getCity()).ifPresent(existingPatient::setCity);
+//            Optional.ofNullable(patient.getTownship()).ifPresent(existingPatient::setTownship);
             patientRepository.save(existingPatient);
             return existingPatient;
         }).orElseThrow(() -> new RuntimeException("Patient cannot be update"));

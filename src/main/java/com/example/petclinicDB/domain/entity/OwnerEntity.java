@@ -11,24 +11,25 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "patients")
-public class PatientEntity {
+@Table(name = "owner")
+public class OwnerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String petName;
+    private String fullName;
 
-    private String status;
+    private String email;
 
-    private String breed;
+    private String password;
 
-    private String gender;
+    private String contactPhone;
 
-    private String dateOfBirth;
+    private String address;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private OwnerEntity pawrent;
+    private String city;
+
+    private String township;
 
 }
