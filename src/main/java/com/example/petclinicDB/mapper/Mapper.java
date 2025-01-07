@@ -1,7 +1,7 @@
 package com.example.petclinicDB.mapper;
 
 public interface Mapper <A, B>{
-    A mapTo(B b);
+    A mapToEntity(B b);
 
-    B mapFrom(A a);
+    B mapToDto(A a);
 }
