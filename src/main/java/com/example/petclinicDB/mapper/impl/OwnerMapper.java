@@ -4,7 +4,9 @@ import com.example.petclinicDB.domain.dto.OwnerDto;
 import com.example.petclinicDB.domain.entity.OwnerEntity;
 import com.example.petclinicDB.mapper.Mapper;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OwnerMapper implements Mapper<OwnerEntity, OwnerDto> {
 
     private ModelMapper modelMapper;

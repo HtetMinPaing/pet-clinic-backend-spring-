@@ -6,7 +6,6 @@ import com.example.petclinicDB.mapper.Mapper;
 import com.example.petclinicDB.service.PatientService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +31,7 @@ public class PatientController {
     @GetMapping(path = "/all")
     public List<PatientDto> findAllPatients() {
         return patientService.findAll().stream()
-                .map(patientMapper::mapFrom)
+                .map(patientMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
@@ -49,21 +48,21 @@ public class PatientController {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
         PageRequest pageRequest = PageRequest.of(page,size, sort);
         Page<PatientEntity> pages = patientService.filterPatients(search, status, breed, pageRequest);
-        return pages.map(patientMapper::mapFrom);
+        return pages.map(patientMapper::mapToDto);
     }
 
     @GetMapping(path = "/find/{id}")
     public ResponseEntity<PatientDto> findPatient(@PathVariable("id") Integer id) {
         PatientEntity foundPatient = patientService.findPatient(id);
-        PatientDto returnPatient = patientMapper.mapFrom(foundPatient);
+        PatientDto returnPatient = patientMapper.mapToDto(foundPatient);
         return new ResponseEntity<>(returnPatient, HttpStatus.FOUND);
     }
 
     @PostMapping(path = "/add")
     public ResponseEntity<PatientDto> addPatient(@RequestBody PatientDto patientDto) {
-        PatientEntity patient = patientMapper.mapTo(patientDto);
+        PatientEntity patient = patientMapper.mapToEntity(patientDto);
         PatientEntity savedPatient = patientService.addPatient(patient);
-        PatientDto returnPatient = patientMapper.mapFrom(savedPatient);
+        PatientDto returnPatient = patientMapper.mapToDto(savedPatient);
         return new ResponseEntity<>(returnPatient, HttpStatus.OK);
     }
 
@@ -72,9 +71,9 @@ public class PatientController {
             @PathVariable("id") Integer id,
             @RequestBody PatientDto patientDto
     ) {
-        PatientEntity patient = patientMapper.mapTo(patientDto);
+        PatientEntity patient = patientMapper.mapToEntity(patientDto);
         PatientEntity savedPatient = patientService.updatePatient(id, patient);
-        PatientDto returnPatient = patientMapper.mapFrom(savedPatient);
+        PatientDto returnPatient = patientMapper.mapToDto(savedPatient);
         return new ResponseEntity<>(returnPatient, HttpStatus.OK);
     }
 

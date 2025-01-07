@@ -16,12 +16,12 @@ public class PatientMapper implements Mapper<PatientEntity, PatientDto> {
     }
 
     @Override
-    public PatientEntity mapTo(PatientDto patientDto) {
+    public PatientEntity mapToEntity(PatientDto patientDto) {
         return modelMapper.map(patientDto, PatientEntity.class);
     }
 
     @Override
-    public PatientDto mapFrom(PatientEntity patientEntity) {
+    public PatientDto mapToDto(PatientEntity patientEntity) {
         return modelMapper.map(patientEntity, PatientDto.class);
     }
 }
