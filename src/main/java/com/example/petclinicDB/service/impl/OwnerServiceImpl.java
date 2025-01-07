@@ -33,4 +33,26 @@ public class OwnerServiceImpl implements OwnerService {
         return ownerRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Owner not found"));
     }
+
+    @Override
+    public OwnerEntity updateOwner(Integer id, OwnerDto ownerDto) {
+        Optional<OwnerEntity> foundowner = ownerRepository.findById(id);
+        return foundowner.map(existingOwner -> {
+            Optional.ofNullable(ownerDto.getFullName()).ifPresent(existingOwner::setFullName);
+            Optional.ofNullable(ownerDto.getEmail()).ifPresent(existingOwner::setFullName);
+            Optional.ofNullable(ownerDto.getPassword()).ifPresent(existingOwner::setPassword);
+            Optional.ofNullable(ownerDto.getContactPhone()).ifPresent(existingOwner::setContactPhone);
+            Optional.ofNullable(ownerDto.getCity()).ifPresent(existingOwner::setCity);
+            Optional.ofNullable(ownerDto.getTownship()).ifPresent(existingOwner::setTownship);
+            Optional.ofNullable(ownerDto.getAddress()).ifPresent(existingOwner::setAddress);
+            ownerRepository.save(existingOwner);
+            return existingOwner;
+        }).orElseThrow(() -> new RuntimeException("Cannot update the owner"));
+    }
+
+    @Override
+    public String deleteOwner(Integer id) {
+        ownerRepository.deleteById(id);
+        return "Owner successfully delete";
+    }
 }

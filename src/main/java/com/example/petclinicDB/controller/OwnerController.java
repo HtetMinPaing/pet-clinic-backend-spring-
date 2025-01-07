@@ -44,4 +44,21 @@ public class OwnerController {
         return new ResponseEntity<>(returnOwner, HttpStatus.FOUND);
     }
 
+    @GetMapping(path = "/update/{id}")
+    public ResponseEntity<OwnerDto> updateOwner(
+            @PathVariable Integer id,
+            @RequestBody OwnerDto ownerDto
+    ) {
+        OwnerEntity updatedOwner = ownerService.updateOwner(id, ownerDto);
+        OwnerDto returnOwner = ownerMapper.mapToDto(updatedOwner);
+        return new ResponseEntity<>(returnOwner, HttpStatus.FOUND);
+    }
+
+    @GetMapping(path = "/delete/{id}")
+    public ResponseEntity<String> deleteOwner(@PathVariable Integer id) {
+        String response = ownerService.deleteOwner(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
 }
