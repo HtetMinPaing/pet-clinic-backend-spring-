@@ -4,6 +4,8 @@ import com.example.petclinicDB.domain.dto.OwnerDto;
 import com.example.petclinicDB.domain.entity.OwnerEntity;
 import com.example.petclinicDB.repository.OwnerRepository;
 import com.example.petclinicDB.service.OwnerService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -54,5 +56,10 @@ public class OwnerServiceImpl implements OwnerService {
     public String deleteOwner(Integer id) {
         ownerRepository.deleteById(id);
         return "Owner successfully delete";
+    }
+
+    @Override
+    public Page<OwnerEntity> filterOwner(String search, String city, String township, PageRequest pageRequest) {
+        return ownerRepository.findOwnersWithFilters(search, city, township, pageRequest);
     }
 }

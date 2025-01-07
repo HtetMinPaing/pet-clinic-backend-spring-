@@ -13,7 +13,7 @@ public interface PatientRepository extends CrudRepository<PatientEntity, Integer
     @Query(value = """
                 SELECT p.*
                 FROM patients p
-                LEFT JOIN owners o ON p.pawrent_id = o.id
+                LEFT JOIN owner o ON p.pawrent_id = o.id
                 WHERE (:search IS NULL OR
                        LOWER(p.pet_name) LIKE LOWER(CONCAT('%', :search, '%')) OR
                        LOWER(o.full_name) LIKE LOWER(CONCAT('%', :search, '%')) OR
@@ -23,12 +23,11 @@ public interface PatientRepository extends CrudRepository<PatientEntity, Integer
                        LOWER(o.township) LIKE LOWER(CONCAT('%', :search, '%')))
                   AND (:status IS NULL OR LOWER(p.status) = LOWER(:status))
                   AND (:breed IS NULL OR LOWER(p.breed) = LOWER(:breed))
-                ORDER BY p.id
             """,
             countQuery = """
                 SELECT COUNT(*)
                 FROM patients p
-                LEFT JOIN owners o ON p.pawrent_id = o.id
+                LEFT JOIN owner o ON p.pawrent_id = o.id
                 WHERE (:search IS NULL OR
                        LOWER(p.pet_name) LIKE LOWER(CONCAT('%', :search, '%')) OR
                        LOWER(o.full_name) LIKE LOWER(CONCAT('%', :search, '%')) OR
