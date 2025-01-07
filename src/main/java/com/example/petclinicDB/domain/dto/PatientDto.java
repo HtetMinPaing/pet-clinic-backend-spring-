@@ -14,12 +14,8 @@ public class PatientDto {
     private Integer id;
     private String petName;
     private String status;
-    private String pawrent;
     private String breed;
     private String gender;
     private String dateOfBirth;
-    private String contactPhone;
-    private String address;
-    private String city;
-    private String township;
+    private OwnerDto pawrent;
 }

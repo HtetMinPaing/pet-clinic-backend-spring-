@@ -14,11 +14,13 @@ public interface PatientRepository extends CrudRepository<PatientEntity, Integer
                 SELECT p.*
                 FROM patients p
                 LEFT JOIN owners o ON p.pawrent_id = o.id
-                WHERE (:search IS NULL OR 
+                WHERE (:search IS NULL OR
                        LOWER(p.pet_name) LIKE LOWER(CONCAT('%', :search, '%')) OR
-                       LOWER(p.pawrent) LIKE LOWER(CONCAT('%', :search, '%')) OR
+                       LOWER(o.full_name) LIKE LOWER(CONCAT('%', :search, '%')) OR
                        LOWER(p.breed) LIKE LOWER(CONCAT('%', :search, '%')) OR
-                       LOWER(p.address) LIKE LOWER(CONCAT('%', :search, '%')))
+                       LOWER(o.address) LIKE LOWER(CONCAT('%', :search, '%')) OR
+                       LOWER(o.city) LIKE LOWER(CONCAT('%', :search, '%')) OR
+                       LOWER(o.township) LIKE LOWER(CONCAT('%', :search, '%')))
                   AND (:status IS NULL OR LOWER(p.status) = LOWER(:status))
                   AND (:breed IS NULL OR LOWER(p.breed) = LOWER(:breed))
                 ORDER BY p.id
@@ -28,10 +30,12 @@ public interface PatientRepository extends CrudRepository<PatientEntity, Integer
                 FROM patients p
                 LEFT JOIN owners o ON p.pawrent_id = o.id
                 WHERE (:search IS NULL OR
-                    LOWER(p.pet_name) LIKE LOWER(CONCAT('%', :search, '%')) OR
-                    LOWER(p.pawrent) LIKE LOWER(CONCAT('%', :search, '%')) OR
-                    LOWER(p.breed) LIKE LOWER(CONCAT('%', :search, '%')) OR
-                    LOWER(p.address) LIKE LOWER(CONCAT('%', :search, '%')))
+                       LOWER(p.pet_name) LIKE LOWER(CONCAT('%', :search, '%')) OR
+                       LOWER(o.full_name) LIKE LOWER(CONCAT('%', :search, '%')) OR
+                       LOWER(p.breed) LIKE LOWER(CONCAT('%', :search, '%')) OR
+                       LOWER(o.address) LIKE LOWER(CONCAT('%', :search, '%')) OR
+                       LOWER(o.city) LIKE LOWER(CONCAT('%', :search, '%')) OR
+                       LOWER(o.township) LIKE LOWER(CONCAT('%', :search, '%')))
                 AND (:status IS NULL OR LOWER(p.status) = LOWER(:status))
                 AND (:breed IS NULL OR LOWER(p.breed) = LOWER(:breed))
             """,

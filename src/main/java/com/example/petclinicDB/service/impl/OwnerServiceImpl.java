@@ -39,7 +39,7 @@ public class OwnerServiceImpl implements OwnerService {
         Optional<OwnerEntity> foundowner = ownerRepository.findById(id);
         return foundowner.map(existingOwner -> {
             Optional.ofNullable(ownerDto.getFullName()).ifPresent(existingOwner::setFullName);
-            Optional.ofNullable(ownerDto.getEmail()).ifPresent(existingOwner::setFullName);
+            Optional.ofNullable(ownerDto.getEmail()).ifPresent(existingOwner::setEmail);
             Optional.ofNullable(ownerDto.getPassword()).ifPresent(existingOwner::setPassword);
             Optional.ofNullable(ownerDto.getContactPhone()).ifPresent(existingOwner::setContactPhone);
             Optional.ofNullable(ownerDto.getCity()).ifPresent(existingOwner::setCity);

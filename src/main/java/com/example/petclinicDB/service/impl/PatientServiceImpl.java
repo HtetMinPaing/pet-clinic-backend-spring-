@@ -1,7 +1,9 @@
 package com.example.petclinicDB.service.impl;
 
 import com.example.petclinicDB.domain.dto.PatientDto;
+import com.example.petclinicDB.domain.entity.OwnerEntity;
 import com.example.petclinicDB.domain.entity.PatientEntity;
+import com.example.petclinicDB.repository.OwnerRepository;
 import com.example.petclinicDB.repository.PatientRepository;
 import com.example.petclinicDB.service.PatientService;
 import org.springframework.data.domain.Page;
@@ -19,13 +21,18 @@ import java.util.stream.StreamSupport;
 public class PatientServiceImpl implements PatientService {
 
     private PatientRepository patientRepository;
+    private OwnerRepository ownerRepository;
 
-    public PatientServiceImpl(PatientRepository patientRepository) {
+    public PatientServiceImpl(PatientRepository patientRepository, OwnerRepository ownerRepository) {
         this.patientRepository = patientRepository;
+        this.ownerRepository = ownerRepository;
     }
 
     @Override
     public PatientEntity addPatient(PatientEntity patient) {
+        OwnerEntity owner = ownerRepository.findById(patient.getPawrent().getId())
+                .orElseThrow(() -> new RuntimeException("Owner not found"));
+        patient.setPawrent(owner);
         return patientRepository.save(patient);
     }
 

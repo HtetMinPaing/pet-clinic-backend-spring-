@@ -44,7 +44,7 @@ public class OwnerController {
         return new ResponseEntity<>(returnOwner, HttpStatus.FOUND);
     }
 
-    @GetMapping(path = "/update/{id}")
+    @PatchMapping(path = "/update/{id}")
     public ResponseEntity<OwnerDto> updateOwner(
             @PathVariable Integer id,
             @RequestBody OwnerDto ownerDto
@@ -54,7 +54,7 @@ public class OwnerController {
         return new ResponseEntity<>(returnOwner, HttpStatus.FOUND);
     }
 
-    @GetMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<String> deleteOwner(@PathVariable Integer id) {
         String response = ownerService.deleteOwner(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
