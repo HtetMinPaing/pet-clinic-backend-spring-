@@ -1,9 +1,9 @@
 package com.example.petclinicDB.controller;
 
-import com.example.petclinicDB.domain.dto.OwnerDto;
-import com.example.petclinicDB.domain.entity.OwnerEntity;
-import com.example.petclinicDB.mapper.impl.OwnerMapper;
-import com.example.petclinicDB.service.OwnerService;
+import com.example.petclinicDB.domain.dto.UserDto;
+import com.example.petclinicDB.domain.entity.UserEntity;
+import com.example.petclinicDB.mapper.impl.UserMapper;
+import com.example.petclinicDB.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -14,41 +14,41 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(path = "/api/owner/")
-public class OwnerController {
+public class UserController {
 
-    private OwnerService ownerService;
+    private UserService userService;
 
-    private OwnerMapper ownerMapper;
+    private UserMapper userMapper;
 
-    public OwnerController(OwnerService ownerService, OwnerMapper ownerMapper) {
-        this.ownerService = ownerService;
-        this.ownerMapper = ownerMapper;
+    public UserController(UserService userService, UserMapper userMapper) {
+        this.userService = userService;
+        this.userMapper = userMapper;
     }
 
     @PostMapping(path = "register")
-    public ResponseEntity<OwnerDto> registerOwner(@RequestBody OwnerDto ownerDto) {
-        OwnerEntity owner = ownerMapper.mapToEntity(ownerDto);
-        OwnerEntity savedOwner = ownerService.registerOwner(owner);
-        OwnerDto returnOwner = ownerMapper.mapToDto(savedOwner);
+    public ResponseEntity<UserDto> registerOwner(@RequestBody UserDto userDto) {
+        UserEntity owner = userMapper.mapToEntity(userDto);
+        UserEntity savedOwner = userService.registerOwner(owner);
+        UserDto returnOwner = userMapper.mapToDto(savedOwner);
         return new ResponseEntity<>(returnOwner, HttpStatus.CREATED);
     }
 
     @GetMapping(path = "/find/{id}")
-    public ResponseEntity<OwnerDto> findOwner(@PathVariable("id") Integer id) {
-        OwnerEntity foundOwner = ownerService.findOwnerById(id);
-        OwnerDto returnOwner = ownerMapper.mapToDto(foundOwner);
+    public ResponseEntity<UserDto> findOwner(@PathVariable("id") Integer id) {
+        UserEntity foundOwner = userService.findOwnerById(id);
+        UserDto returnOwner = userMapper.mapToDto(foundOwner);
         return new ResponseEntity<>(returnOwner, HttpStatus.FOUND);
     }
 
     @GetMapping(path = "/find")
-    public ResponseEntity<OwnerDto> findOwnerByEmail(@RequestBody OwnerDto ownerDto) {
-        OwnerEntity foundOwner = ownerService.findOwnerByEmail(ownerDto.getEmail());
-        OwnerDto returnOwner = ownerMapper.mapToDto(foundOwner);
+    public ResponseEntity<UserDto> findOwnerByEmail(@RequestBody UserDto userDto) {
+        UserEntity foundOwner = userService.findOwnerByEmail(userDto.getEmail());
+        UserDto returnOwner = userMapper.mapToDto(foundOwner);
         return new ResponseEntity<>(returnOwner, HttpStatus.FOUND);
     }
 
     @GetMapping(path = "/all/pages")
-    public Page<OwnerDto> findAllPatients(
+    public Page<UserDto> findAllPatients(
             @RequestParam(defaultValue = "id", required = false) String sortBy,
             @RequestParam(defaultValue = "asc", required = false) String sortDirection,
             @RequestParam(defaultValue = "0", required = false) int page,
@@ -59,23 +59,23 @@ public class OwnerController {
     ) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
         PageRequest pageRequest = PageRequest.of(page, size, sort);
-        Page<OwnerEntity> pages = ownerService.filterOwner(search, city, township, pageRequest);
-        return pages.map(ownerMapper::mapToDto);
+        Page<UserEntity> pages = userService.filterOwner(search, city, township, pageRequest);
+        return pages.map(userMapper::mapToDto);
     }
 
     @PatchMapping(path = "/update/{id}")
-    public ResponseEntity<OwnerDto> updateOwner(
+    public ResponseEntity<UserDto> updateOwner(
             @PathVariable Integer id,
-            @RequestBody OwnerDto ownerDto
+            @RequestBody UserDto userDto
     ) {
-        OwnerEntity updatedOwner = ownerService.updateOwner(id, ownerDto);
-        OwnerDto returnOwner = ownerMapper.mapToDto(updatedOwner);
+        UserEntity updatedOwner = userService.updateOwner(id, userDto);
+        UserDto returnOwner = userMapper.mapToDto(updatedOwner);
         return new ResponseEntity<>(returnOwner, HttpStatus.FOUND);
     }
 
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<String> deleteOwner(@PathVariable Integer id) {
-        String response = ownerService.deleteOwner(id);
+        String response = userService.deleteOwner(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

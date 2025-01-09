@@ -1,9 +1,8 @@
 package com.example.petclinicDB.service.impl;
 
-import com.example.petclinicDB.domain.dto.PatientDto;
-import com.example.petclinicDB.domain.entity.OwnerEntity;
+import com.example.petclinicDB.domain.entity.UserEntity;
 import com.example.petclinicDB.domain.entity.PatientEntity;
-import com.example.petclinicDB.repository.OwnerRepository;
+import com.example.petclinicDB.repository.UserRepository;
 import com.example.petclinicDB.repository.PatientRepository;
 import com.example.petclinicDB.service.PatientService;
 import org.springframework.data.domain.Page;
@@ -11,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,16 +19,16 @@ import java.util.stream.StreamSupport;
 public class PatientServiceImpl implements PatientService {
 
     private PatientRepository patientRepository;
-    private OwnerRepository ownerRepository;
+    private UserRepository userRepository;
 
-    public PatientServiceImpl(PatientRepository patientRepository, OwnerRepository ownerRepository) {
+    public PatientServiceImpl(PatientRepository patientRepository, UserRepository userRepository) {
         this.patientRepository = patientRepository;
-        this.ownerRepository = ownerRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public PatientEntity addPatient(PatientEntity patient) {
-        OwnerEntity owner = ownerRepository.findById(patient.getPawrent().getId())
+        UserEntity owner = userRepository.findById(patient.getPawrent().getId())
                 .orElseThrow(() -> new RuntimeException("Owner not found"));
         patient.setPawrent(owner);
         return patientRepository.save(patient);

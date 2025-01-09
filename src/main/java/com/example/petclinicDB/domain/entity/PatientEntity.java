@@ -29,6 +29,6 @@ public class PatientEntity {
     private String dateOfBirth;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    private OwnerEntity pawrent;
+    private UserEntity pawrent;
 
 }

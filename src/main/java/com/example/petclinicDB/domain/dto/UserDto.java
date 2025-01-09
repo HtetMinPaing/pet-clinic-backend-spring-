@@ -1,21 +1,15 @@
-package com.example.petclinicDB.domain.entity;
+package com.example.petclinicDB.domain.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "owner")
-public class OwnerEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@NoArgsConstructor
+public class UserDto {
     private Integer id;
 
     private String fullName;
@@ -31,5 +25,4 @@ public class OwnerEntity {
     private String city;
 
     private String township;
-
 }

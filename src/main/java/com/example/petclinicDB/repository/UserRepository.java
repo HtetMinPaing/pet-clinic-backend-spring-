@@ -1,7 +1,6 @@
 package com.example.petclinicDB.repository;
 
-import com.example.petclinicDB.domain.dto.OwnerDto;
-import com.example.petclinicDB.domain.entity.OwnerEntity;
+import com.example.petclinicDB.domain.entity.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Query;
@@ -11,12 +10,12 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface OwnerRepository extends CrudRepository<OwnerEntity, Integer>, PagingAndSortingRepository<OwnerEntity, Integer> {
-    Optional<OwnerEntity> findByEmail(String email);
+public interface UserRepository extends CrudRepository<UserEntity, Integer>, PagingAndSortingRepository<UserEntity, Integer> {
+    Optional<UserEntity> findByEmail(String email);
 
     @Query(
             value = """
-                SELECT * FROM owner o
+                SELECT * FROM users o
                 WHERE (:city IS NULL OR LOWER(o.city) LIKE LOWER(:city))
                 AND (:township IS NULL OR LOWER(o.township) LIKE LOWER(:township))
                 AND (:search IS NULL OR
@@ -26,7 +25,7 @@ public interface OwnerRepository extends CrudRepository<OwnerEntity, Integer>, P
                 )
             """,
             countQuery =  """
-                SELECT COUNT(*) FROM owner o
+                SELECT COUNT(*) FROM users o
                 WHERE (:city IS NULL OR LOWER(o.city) LIKE LOWER(:city))
                 AND (:township IS NULL OR LOWER(o.township) LIKE LOWER(:township))
                 AND (:search IS NULL OR
@@ -37,7 +36,7 @@ public interface OwnerRepository extends CrudRepository<OwnerEntity, Integer>, P
             """,
             nativeQuery = true
     )
-    Page<OwnerEntity> findOwnersWithFilters(
+    Page<UserEntity> findOwnersWithFilters(
             @Param("search") String search,
             @Param("city") String city,
             @Param("township") String township,

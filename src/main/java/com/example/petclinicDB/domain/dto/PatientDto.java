@@ -1,6 +1,5 @@
 package com.example.petclinicDB.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +16,5 @@ public class PatientDto {
     private String breed;
     private String gender;
     private String dateOfBirth;
-    private OwnerDto pawrent;
+    private UserDto pawrent;
 }
