@@ -1,13 +1,16 @@
 package com.example.petclinicDB.service.impl;
 
 import com.example.petclinicDB.domain.dto.UserDto;
+import com.example.petclinicDB.domain.entity.RoleEntity;
 import com.example.petclinicDB.domain.entity.UserEntity;
+import com.example.petclinicDB.repository.RoleRepository;
 import com.example.petclinicDB.repository.UserRepository;
 import com.example.petclinicDB.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -15,12 +18,17 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    private RoleRepository roleRepository;
+
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
     public UserEntity registerOwner(UserEntity userEntity) {
+        RoleEntity roles = roleRepository.findByName("OWNER").get();
+        userEntity.setRoles(Collections.singletonList(roles));
         return userRepository.save(userEntity);
     }
 

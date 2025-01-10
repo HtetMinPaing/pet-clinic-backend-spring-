@@ -1,5 +1,6 @@
 package com.example.petclinicDB.service.impl;
 
+import com.example.petclinicDB.domain.entity.RoleEntity;
 import com.example.petclinicDB.domain.entity.UserEntity;
 import com.example.petclinicDB.domain.entity.PatientEntity;
 import com.example.petclinicDB.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
