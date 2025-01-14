@@ -83,4 +83,10 @@ public class PatientController {
         return new ResponseEntity<>("Patient successfully deleted (Id: "+ id + ")",HttpStatus.OK);
     }
 
+    @DeleteMapping(path = "/delete/selected")
+    public ResponseEntity<String> deleteSelectedPatient(@RequestBody List<Integer> ids) {
+        patientService.deleteSelectedId(ids);
+        return new ResponseEntity<>("Patient successfully deleted (Id: "+ ids + ")",HttpStatus.OK);
+    }
+
 }

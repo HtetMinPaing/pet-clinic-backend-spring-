@@ -21,4 +21,6 @@ public interface PatientService {
     PatientEntity updatePatient(Integer id, PatientEntity patient);
 
     void deletePatient(Integer id);
+
+    void deleteSelectedId(List<Integer> ids);
 }

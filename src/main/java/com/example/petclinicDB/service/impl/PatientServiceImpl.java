@@ -70,10 +70,11 @@ public class PatientServiceImpl implements PatientService {
             Optional.ofNullable(patient.getBreed()).ifPresent(existingPatient::setBreed);
             Optional.ofNullable(patient.getGender()).ifPresent(existingPatient::setGender);
             Optional.ofNullable(patient.getDateOfBirth()).ifPresent(existingPatient::setDateOfBirth);
-//            Optional.ofNullable(patient.getContactPhone()).ifPresent(existingPatient::setContactPhone);
-//            Optional.ofNullable(patient.getAddress()).ifPresent(existingPatient::setAddress);
-//            Optional.ofNullable(patient.getCity()).ifPresent(existingPatient::setCity);
-//            Optional.ofNullable(patient.getTownship()).ifPresent(existingPatient::setTownship);
+            Optional.ofNullable(patient.getPawrent().getEmail()).ifPresent((email) -> {
+                UserEntity owner = userRepository.findByEmail(email)
+                        .orElseThrow(() -> new RuntimeException("Owner not found"));
+                existingPatient.setPawrent(owner);
+            });
             patientRepository.save(existingPatient);
             return existingPatient;
         }).orElseThrow(() -> new RuntimeException("Patient cannot be update"));
@@ -82,6 +83,11 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void deletePatient(Integer id) {
         patientRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteSelectedId(List<Integer> ids) {
+        patientRepository.deleteAllById(ids);
     }
 
 }

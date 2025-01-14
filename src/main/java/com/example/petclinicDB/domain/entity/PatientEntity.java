@@ -28,7 +28,7 @@ public class PatientEntity {
 
     private String dateOfBirth;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private UserEntity pawrent;
 
 }
