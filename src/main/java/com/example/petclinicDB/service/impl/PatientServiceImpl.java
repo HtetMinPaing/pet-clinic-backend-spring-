@@ -30,7 +30,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientEntity addPatient(PatientEntity patient) {
-        UserEntity owner = userRepository.findById(patient.getPawrent().getId())
+        UserEntity owner = userRepository.findByEmail(patient.getPawrent().getEmail())
                 .orElseThrow(() -> new RuntimeException("Owner not found"));
         patient.setPawrent(owner);
         return patientRepository.save(patient);

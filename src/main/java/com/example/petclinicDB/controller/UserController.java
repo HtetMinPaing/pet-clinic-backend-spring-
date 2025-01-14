@@ -48,18 +48,19 @@ public class UserController {
     }
 
     @GetMapping(path = "/all/pages")
-    public Page<UserDto> findAllPatients(
+    public Page<UserDto> findAllOwners(
             @RequestParam(defaultValue = "id", required = false) String sortBy,
             @RequestParam(defaultValue = "asc", required = false) String sortDirection,
             @RequestParam(defaultValue = "0", required = false) int page,
             @RequestParam(defaultValue = "20", required = false) int size,
             @RequestParam(required = false) String search,
             @RequestParam(required = false) String city,
-            @RequestParam(required = false) String township
+            @RequestParam(required = false) String township,
+            @RequestParam(required = false) String email
     ) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
         PageRequest pageRequest = PageRequest.of(page, size, sort);
-        Page<UserEntity> pages = userService.filterOwner(search, city, township, pageRequest);
+        Page<UserEntity> pages = userService.filterOwner(search, city, township, email, pageRequest);
         return pages.map(userMapper::mapToDto);
     }
 

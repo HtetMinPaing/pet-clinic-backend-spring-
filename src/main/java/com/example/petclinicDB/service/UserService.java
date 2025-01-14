@@ -16,5 +16,5 @@ public interface UserService {
 
     String deleteOwner(Integer id);
 
-    Page<UserEntity> filterOwner(String search, String city, String township, PageRequest pageRequest);
+    Page<UserEntity> filterOwner(String search, String city, String township, String email, PageRequest pageRequest);
 }

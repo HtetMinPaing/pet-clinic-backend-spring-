@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserEntity> filterOwner(String search, String city, String township, PageRequest pageRequest) {
-        return userRepository.findOwnersWithFilters(search, city, township, pageRequest);
+    public Page<UserEntity> filterOwner(String search, String city, String township, String email, PageRequest pageRequest) {
+        return userRepository.findOwnersWithFilters(search, city, township, email, pageRequest);
     }
 }
