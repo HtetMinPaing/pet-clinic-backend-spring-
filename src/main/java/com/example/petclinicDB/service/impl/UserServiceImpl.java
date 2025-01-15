@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -69,5 +70,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UserEntity> filterOwner(String search, String city, String township, String email, PageRequest pageRequest) {
         return userRepository.findOwnersWithFilters(search, city, township, email, pageRequest);
+    }
+
+    @Override
+    public String deleteSelectedId(List<Integer> ids) {
+        userRepository.deleteAllById(ids);
+        return "Patient successfully deleted (Id: "+ ids + ")";
     }
 }

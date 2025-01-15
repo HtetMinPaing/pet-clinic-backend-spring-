@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(path = "/api/owner/")
@@ -71,7 +73,7 @@ public class UserController {
     ) {
         UserEntity updatedOwner = userService.updateOwner(id, userDto);
         UserDto returnOwner = userMapper.mapToDto(updatedOwner);
-        return new ResponseEntity<>(returnOwner, HttpStatus.FOUND);
+        return new ResponseEntity<>(returnOwner, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete/{id}")
@@ -80,5 +82,9 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
+    @DeleteMapping(path = "/delete/selected")
+    public ResponseEntity<String> deleteSelectedOwner(@RequestBody List<Integer> ids) {
+        String response = userService.deleteSelectedId(ids);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
