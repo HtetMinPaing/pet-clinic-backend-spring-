@@ -1,6 +1,8 @@
 package com.example.petclinicDB.service;
 
 import com.example.petclinicDB.domain.entity.VetEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 public interface VetService {
     VetEntity registerVet(VetEntity vet);
@@ -8,4 +10,6 @@ public interface VetService {
     VetEntity findById(Integer id);
 
     VetEntity findByEmail(String email);
+
+    Page<VetEntity> findAllWithFilters(String search, String city, String township, String email, PageRequest pageRequest);
 }

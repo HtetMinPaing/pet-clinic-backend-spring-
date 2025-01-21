@@ -4,6 +4,9 @@ import com.example.petclinicDB.domain.dto.VetDto;
 import com.example.petclinicDB.domain.entity.VetEntity;
 import com.example.petclinicDB.mapper.impl.VetMapper;
 import com.example.petclinicDB.service.VetService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +45,22 @@ public class VetController {
         VetEntity foundVet = vetService.findByEmail(vetDto.getEmail());
         VetDto returnVet = vetMapper.mapToDto(foundVet);
         return new ResponseEntity<>(returnVet, HttpStatus.FOUND);
+    }
+
+    @GetMapping(path = "/all/pages")
+    public Page<VetDto> findAllWithFilter(
+            @RequestParam(defaultValue = "id", required = false) String sortBy,
+            @RequestParam(defaultValue = "asc", required = false) String sortDirection,
+            @RequestParam(defaultValue = "0", required = false) int page,
+            @RequestParam(defaultValue = "20", required = false) int size,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String township,
+            @RequestParam(required = false) String email
+    ) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        Page<VetEntity> pages = vetService.findAllWithFilters(search, city, township, email, pageRequest);
+        return pages.map(vetMapper::mapToDto);
     }
 }
