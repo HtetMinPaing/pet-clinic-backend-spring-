@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -52,5 +53,17 @@ public class VetServiceImpl implements VetService {
             vetRepository.save(existingVet);
             return existingVet;
         }).orElseThrow(() -> new RuntimeException("Vet updated successfully"));
+    }
+
+    @Override
+    public String deleteOne(Integer id) {
+        vetRepository.deleteById(id);
+        return "Delete Successfully Vet Id: " + id;
+    }
+
+    @Override
+    public String deleteSelected(List<Integer> ids) {
+        vetRepository.deleteAllById(ids);
+        return "Delete Successfully Selected Ids";
     }
 }

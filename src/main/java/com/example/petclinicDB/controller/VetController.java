@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/vet/")
 @CrossOrigin(origins = "http://localhost:3000/")
@@ -72,6 +74,18 @@ public class VetController {
         VetEntity updatedVet = vetService.updateVet(id, vetDto);
         VetDto returnVet = vetMapper.mapToDto(updatedVet);
         return new ResponseEntity<>(returnVet, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/delete/{id}")
+    public ResponseEntity<String> deleteOne(@PathVariable Integer id) {
+        String response = vetService.deleteOne(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/delete/selected")
+    public ResponseEntity<String> deleteSelected(@PathVariable List<Integer> ids) {
+        String response = vetService.deleteSelected(ids);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }
