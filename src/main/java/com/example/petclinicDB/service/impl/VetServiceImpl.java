@@ -18,4 +18,9 @@ public class VetServiceImpl implements VetService {
     public VetEntity registerVet(VetEntity vet) {
         return vetRepository.save(vet);
     }
+
+    @Override
+    public VetEntity findById(Integer id) {
+        return vetRepository.findById(id).orElseThrow(() -> new RuntimeException("Vet not found"));
+    }
 }

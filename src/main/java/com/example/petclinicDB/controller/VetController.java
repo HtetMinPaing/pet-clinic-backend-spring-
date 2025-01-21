@@ -29,4 +29,11 @@ public class VetController {
         VetDto returnVet = vetMapper.mapToDto(savedVet);
         return new ResponseEntity<>(returnVet, HttpStatus.CREATED);
     }
+
+    @GetMapping(path = "find/{1d}")
+    public ResponseEntity<VetDto> findById(@PathVariable("id") Integer id) {
+        VetEntity foundVet = vetService.findById(id);
+        VetDto returnVet = vetMapper.mapToDto(foundVet);
+        return new ResponseEntity<>(returnVet, HttpStatus.FOUND);
+    }
 }
