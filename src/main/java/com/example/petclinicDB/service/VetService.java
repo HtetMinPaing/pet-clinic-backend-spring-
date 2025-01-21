@@ -6,4 +6,6 @@ public interface VetService {
     VetEntity registerVet(VetEntity vet);
 
     VetEntity findById(Integer id);
+
+    VetEntity findByEmail(String email);
 }

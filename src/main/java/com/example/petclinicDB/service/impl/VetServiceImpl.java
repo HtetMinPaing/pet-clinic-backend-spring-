@@ -23,4 +23,9 @@ public class VetServiceImpl implements VetService {
     public VetEntity findById(Integer id) {
         return vetRepository.findById(id).orElseThrow(() -> new RuntimeException("Vet not found"));
     }
+
+    @Override
+    public VetEntity findByEmail(String email) {
+        return vetRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Vet not found"));
+    }
 }

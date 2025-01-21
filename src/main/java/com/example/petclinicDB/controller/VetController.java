@@ -36,4 +36,11 @@ public class VetController {
         VetDto returnVet = vetMapper.mapToDto(foundVet);
         return new ResponseEntity<>(returnVet, HttpStatus.FOUND);
     }
+
+    @GetMapping(path = "find")
+    public ResponseEntity<VetDto> findByEmail(@RequestBody VetDto vetDto) {
+        VetEntity foundVet = vetService.findByEmail(vetDto.getEmail());
+        VetDto returnVet = vetMapper.mapToDto(foundVet);
+        return new ResponseEntity<>(returnVet, HttpStatus.FOUND);
+    }
 }
