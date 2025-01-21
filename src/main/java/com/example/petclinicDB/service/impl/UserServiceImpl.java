@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
     public UserEntity registerOwner(UserEntity userEntity) {
         RoleEntity roles = roleRepository.findByName("OWNER").get();
         userEntity.setRoles(Collections.singletonList(roles));
+        userEntity.setPassword("12345678");
         return userRepository.save(userEntity);
     }
 
