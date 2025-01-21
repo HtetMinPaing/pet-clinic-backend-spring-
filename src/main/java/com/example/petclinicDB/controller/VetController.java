@@ -35,7 +35,7 @@ public class VetController {
         return new ResponseEntity<>(returnVet, HttpStatus.CREATED);
     }
 
-    @GetMapping(path = "find/{1d}")
+    @GetMapping(path = "find/{id}")
     public ResponseEntity<VetDto> findById(@PathVariable("id") Integer id) {
         VetEntity foundVet = vetService.findById(id);
         VetDto returnVet = vetMapper.mapToDto(foundVet);
@@ -83,7 +83,7 @@ public class VetController {
     }
 
     @DeleteMapping(path = "/delete/selected")
-    public ResponseEntity<String> deleteSelected(@PathVariable List<Integer> ids) {
+    public ResponseEntity<String> deleteSelected(@RequestBody List<Integer> ids) {
         String response = vetService.deleteSelected(ids);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

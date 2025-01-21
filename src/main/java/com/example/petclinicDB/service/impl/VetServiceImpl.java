@@ -44,12 +44,12 @@ public class VetServiceImpl implements VetService {
     public VetEntity updateVet(Integer id, VetDto vetDto) {
         Optional<VetEntity> foundVet = vetRepository.findById(id);
         return foundVet.map(existingVet -> {
-            Optional.ofNullable(vetDto.getFullName()).ifPresent(vetDto::setFullName);
-            Optional.ofNullable(vetDto.getEmail()).ifPresent(vetDto::setEmail);
-            Optional.ofNullable(vetDto.getContactPhone()).ifPresent(vetDto::setContactPhone);
-            Optional.ofNullable(vetDto.getCity()).ifPresent(vetDto::setCity);
-            Optional.ofNullable(vetDto.getTownship()).ifPresent(vetDto::setTownship);
-            Optional.ofNullable(vetDto.getAddress()).ifPresent(vetDto::setAddress);
+            Optional.ofNullable(vetDto.getFullName()).ifPresent(existingVet::setFullName);
+            Optional.ofNullable(vetDto.getEmail()).ifPresent(existingVet::setEmail);
+            Optional.ofNullable(vetDto.getContactPhone()).ifPresent(existingVet::setContactPhone);
+            Optional.ofNullable(vetDto.getCity()).ifPresent(existingVet::setCity);
+            Optional.ofNullable(vetDto.getTownship()).ifPresent(existingVet::setTownship);
+            Optional.ofNullable(vetDto.getAddress()).ifPresent(existingVet::setAddress);
             vetRepository.save(existingVet);
             return existingVet;
         }).orElseThrow(() -> new RuntimeException("Vet updated successfully"));

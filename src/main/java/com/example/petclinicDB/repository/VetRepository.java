@@ -25,7 +25,7 @@ public interface VetRepository extends CrudRepository<VetEntity, Integer> {
                     LOWER(v.email) LIKE LOWER(CONCAT('%', :email, '%')))
             """,
             countQuery =  """
-                SELECT COUNT(*) FROM users o
+                SELECT COUNT(*) FROM vets v
                 WHERE (:city IS NULL OR LOWER(v.city) LIKE LOWER(:city))
                 AND (:township IS NULL OR LOWER(v.township) LIKE LOWER(:township))
                 AND (:search IS NULL OR
