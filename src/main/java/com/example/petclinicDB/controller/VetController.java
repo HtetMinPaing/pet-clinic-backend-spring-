@@ -63,4 +63,15 @@ public class VetController {
         Page<VetEntity> pages = vetService.findAllWithFilters(search, city, township, email, pageRequest);
         return pages.map(vetMapper::mapToDto);
     }
+
+    @PatchMapping(path = "/update/{id}")
+    public ResponseEntity<VetDto> updateVet(
+            @PathVariable Integer id,
+            @RequestBody VetDto vetDto
+    ) {
+        VetEntity updatedVet = vetService.updateVet(id, vetDto);
+        VetDto returnVet = vetMapper.mapToDto(updatedVet);
+        return new ResponseEntity<>(returnVet, HttpStatus.OK);
+    }
+
 }
